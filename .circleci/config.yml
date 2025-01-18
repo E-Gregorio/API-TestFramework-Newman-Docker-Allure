@@ -1,0 +1,41 @@
+version: 2.1
+jobs:
+  test:
+    docker:
+    - image: cimg/node:16.0-browsers
+    steps:
+    - checkout
+
+    # Instalación de Java (necesario para Allure)
+    - run:
+        name: Install Java Runtime
+        command: |
+          sudo apt-get update
+          sudo apt-get install -y openjdk-11-jdk
+
+    # Instalación de dependencias del proyecto
+    - run:
+        name: Install Project Dependencies
+        command: |
+          npm install -g newman allure-commandline
+          npm install
+
+    # Ejecución de pruebas
+    - run:
+        name: Run API Tests
+        command: npm test
+
+    # Almacenamiento de resultados
+    - store_artifacts:
+        path: allure-results
+        destination: allure-results
+
+    - store_artifacts:
+        path: allure-report
+        destination: allure-report
+
+workflows:
+  version: 2
+  test:
+    jobs:
+    - test
