@@ -42,7 +42,7 @@ jobs:
         name: Print Report URL
         command: |
           echo "Allure Report is available at:"
-          echo "https://app.circleci.com/pipelines/github/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_BUILD_NUM/artifacts"
+          echo "https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/0/allure-report/index.html"
 
 workflows:
   version: 2
