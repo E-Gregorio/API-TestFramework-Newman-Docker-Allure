@@ -6,19 +6,24 @@ jobs:
     steps:
     - checkout
 
-    # Instalación de Java (necesario para Allure)
+    # Instalación de Java
     - run:
         name: Install Java Runtime
         command: |
           sudo apt-get update
           sudo apt-get install -y openjdk-11-jdk
 
+    # Instalación de dependencias globales
+    - run:
+        name: Install Global Dependencies
+        command: |
+          sudo npm install -g newman
+          sudo npm install -g allure-commandline
+
     # Instalación de dependencias del proyecto
     - run:
         name: Install Project Dependencies
-        command: |
-          npm install -g newman allure-commandline
-          npm install
+        command: npm install
 
     # Ejecución de pruebas
     - run:
