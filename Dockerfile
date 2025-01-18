@@ -11,13 +11,9 @@ COPY package*.json ./
 COPY JSONPlaceholder-CRUD.postman_collection.json ./
 
 
-RUN npm install -g newman allure-commandline
-
-
-RUN npm install
-
-
-RUN mkdir -p allure-results
+RUN npm install -g newman allure-commandline && \
+	npm install && \
+	mkdir -p allure-results
 
 
 CMD ["npm", "test"]
