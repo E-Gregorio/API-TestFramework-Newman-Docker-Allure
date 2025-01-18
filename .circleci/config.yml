@@ -6,31 +6,30 @@ jobs:
     steps:
     - checkout
 
-    # Instalación de Java
     - run:
         name: Install Java Runtime
         command: |
           sudo apt-get update
           sudo apt-get install -y openjdk-11-jdk
 
-    # Instalación de dependencias globales
     - run:
         name: Install Global Dependencies
         command: |
           sudo npm install -g newman
           sudo npm install -g allure-commandline
 
-    # Instalación de dependencias del proyecto
     - run:
         name: Install Project Dependencies
         command: npm install
 
-    # Ejecución de pruebas
     - run:
-        name: Run API Tests
-        command: npm test
+        name: Run Tests and Generate Allure Report
+        command: |
+          npm run test:report
 
-    # Almacenamiento de resultados
+    - store_test_results:
+        path: allure-results
+
     - store_artifacts:
         path: allure-results
         destination: allure-results
@@ -38,6 +37,12 @@ jobs:
     - store_artifacts:
         path: allure-report
         destination: allure-report
+
+    - run:
+        name: Print Report URL
+        command: |
+          echo "Allure Report is available at:"
+          echo "https://app.circleci.com/pipelines/github/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_BUILD_NUM/artifacts"
 
 workflows:
   version: 2

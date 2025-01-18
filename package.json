@@ -1,11 +1,14 @@
 {
   "name": "jasonplaceholdercrud",
   "version": "1.0.0",
-  "description": "",
+  "description": "API Testing Framework with Newman and Allure Reports",
   "main": "index.js",
   "scripts": {
-    "test": "newman run JSONPlaceholder-CRUD.postman_collection.json -r cli,allure --reporter-allure-export allure-results",
-    "report": "allure generate allure-results --clean && allure open"
+    "test": "newman run JSONPlaceholder-CRUD.postman_collection.json -r cli,allure --reporter-allure-export=allure-results",
+    "report:clean": "rimraf allure-report/ allure-results/",
+    "report:generate": "allure generate --clean",
+    "report:open": "allure open",
+    "test:report": "npm run report:clean && npm test && npm run report:generate"
   },
   "keywords": [],
   "author": "",
@@ -14,8 +17,9 @@
     "axios": "^1.7.9"
   },
   "devDependencies": {
+    "allure-commandline": "^2.24.1",
     "newman": "^5.3.2",
     "newman-reporter-allure": "^3.0.9",
-    "allure-commandline": "^2.24.1"
+    "rimraf": "^5.0.10"
   }
 }
